@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payloader-fake · 渗透测试载荷生成框架</title>
+  <meta name="description" content="Payloader-fake 是一款面向安全研究人员的高效渗透测试载荷生成框架，支持多平台、多语言、多协议。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ───────────── NAV ───────────── -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="#">
+      <span class="nav__logo-icon">⚡</span>
+      <span class="nav__logo-text">Payloader<span class="accent">-fake</span></span>
+    </a>
+    <nav class="nav__links">
+      <a href="#features">特性</a>
+      <a href="#roadmap">路线图</a>
+      <a href="#changelog">更新日志</a>
+      <a href="#stats">趋势</a>
+      <a href="https://github.com/liangyile527" target="_blank" class="btn btn--outline btn--sm">GitHub ↗</a>
+    </nav>
+    <button class="nav__burger" aria-label="menu" id="burger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav__mobile" id="mobileMenu">
+    <a href="#features" class="nav__mobile-link">特性</a>
+    <a href="#roadmap" class="nav__mobile-link">路线图</a>
+    <a href="#changelog" class="nav__mobile-link">更新日志</a>
+    <a href="#stats" class="nav__mobile-link">趋势</a>
+    <a href="https://github.com/liangyile527" target="_blank" class="nav__mobile-link nav__mobile-gh">GitHub ↗</a>
+  </div>
+</header>
+
+<!-- ───────────── HERO ───────────── -->
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <canvas id="matrixCanvas"></canvas>
+    <div class="hero__gradient"></div>
+  </div>
+  <div class="container hero__content">
+    <div class="badge badge--glow animate-fade-up">🛡️ 开源 · 免费 · 持续维护</div>
+    <h1 class="hero__title animate-fade-up delay-1">
+      下一代<br />
+      <span class="gradient-text">渗透测试</span><br />
+      载荷生成框架
+    </h1>
+    <p class="hero__sub animate-fade-up delay-2">
+      Payloader-fake 帮助安全研究人员快速生成、管理和投递多平台载荷，<br class="hide-mobile" />
+      内置免杀混淆、流量伪装与回调监听，让每一次授权测试更高效。
+    </p>
+    <div class="hero__cta animate-fade-up delay-3">
+      <a href="https://github.com/liangyile527" target="_blank" class="btn btn--primary btn--lg">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
+      <a href="#features" class="btn btn--ghost btn--lg">了解特性 ↓</a>
+    </div>
+    <div class="hero__stats animate-fade-up delay-4">
+      <div class="hero__stat"><span class="hero__stat-num" data-target="2400">0</span><span>Stars</span></div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat"><span class="hero__stat-num" data-target="380">0</span><span>Forks</span></div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat"><span class="hero__stat-num" data-target="67">0</span><span>Contributors</span></div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat"><span class="hero__stat-num" data-target="14">0</span><span>Releases</span></div>
+    </div>
+  </div>
+  <div class="hero__scroll-hint">
+    <span class="scroll-dot"></span>
+    <span>向下滚动</span>
+  </div>
+</section>
+
+<!-- ───────────── TERMINAL DEMO ───────────── -->
+<section class="terminal-section">
+  <div class="container">
+    <div class="terminal" id="terminalDemo">
+      <div class="terminal__bar">
+        <span class="terminal__dot dot-red"></span>
+        <span class="terminal__dot dot-yellow"></span>
+        <span class="terminal__dot dot-green"></span>
+        <span class="terminal__title">payloader-fake — bash</span>
+      </div>
+      <div class="terminal__body">
+        <div class="terminal__line"><span class="t-prompt">$</span> <span class="t-cmd">payloader-fake</span> <span class="t-flag">--target</span> <span class="t-val">192.168.1.100</span> <span class="t-flag">--type</span> <span class="t-val">reverse_shell</span></div>
+        <div class="terminal__line t-out" id="tOut1"></div>
+        <div class="terminal__line t-out" id="tOut2"></div>
+        <div class="terminal__line t-out" id="tOut3"></div>
+        <div class="terminal__line t-success" id="tOut4"></div>
+        <div class="terminal__line t-out" id="tOut5"></div>
+        <div class="terminal__cursor" id="tCursor">▋</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── FEATURES ───────────── -->
+<section class="section features" id="features">
+  <div class="container">
+    <div class="section__header">
+      <div class="badge">核心特性</div>
+      <h2 class="section__title">为安全研究人员<span class="gradient-text">精心打造</span></h2>
+      <p class="section__sub">从载荷生成到流量隐匿，全流程覆盖，助力高效授权渗透测试。</p>
+    </div>
+    <div class="features__grid">
+      <div class="feature-card feature-card--large">
+        <div class="feature-card__icon">🎯</div>
+        <h3>多平台载荷生成</h3>
+        <p>支持 Windows / Linux / macOS / Android 全平台，一键生成针对性 shellcode、EXE、ELF、APK 等格式载荷，内置模板引擎快速定制。</p>
+        <div class="feature-card__tags"><span>Windows</span><span>Linux</span><span>macOS</span><span>Android</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🥷</div>
+        <h3>免杀混淆引擎</h3>
+        <p>内置多种混淆算法，自动规避主流 AV/EDR，持续更新绕过规则库。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📡</div>
+        <h3>流量伪装</h3>
+        <p>C2 流量伪装成 HTTPS/DNS/ICMP，支持域前置与 CDN 转发。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🔌</div>
+        <h3>插件化架构</h3>
+        <p>基于 Python 插件体系，社区可自由扩展协议、编码和投递方式。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🖥️</div>
+        <h3>Web 管理面板</h3>
+        <p>内置现代化 Web UI，实时查看 Session、文件传输、截图等操作。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📊</div>
+        <h3>报告生成</h3>
+        <p>自动汇总测试记录，一键导出 PDF / Markdown 渗透测试报告。</p>
+      </div>
+      <div class="feature-card feature-card--large feature-card--right">
+        <div class="feature-card__icon">⚡</div>
+        <h3>极速启动 · 零依赖部署</h3>
+        <p>单文件二进制，无需额外安装环境。Docker 镜像体积 &lt; 50 MB，3 秒完成部署，专为红队场景优化。</p>
+        <div class="feature-card__code">
+          <span class="t-prompt">$</span> docker run -p 4444:4444 payloader/fake:latest
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── ROADMAP ───────────── -->
+<section class="section roadmap" id="roadmap">
+  <div class="container">
+    <div class="section__header">
+      <div class="badge">路线图</div>
+      <h2 class="section__title">项目<span class="gradient-text">发展规划</span></h2>
+      <p class="section__sub">透明开发，社区驱动，每一步都有迹可循。</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline__item timeline__item--done">
+        <div class="timeline__marker"><span>✓</span></div>
+        <div class="timeline__content">
+          <div class="timeline__phase">Phase 1 · 2024 Q1</div>
+          <h3>核心框架搭建</h3>
+          <ul>
+            <li>✅ 基础载荷生成引擎</li>
+            <li>✅ CLI 命令行界面</li>
+            <li>✅ Windows/Linux 双平台支持</li>
+            <li>✅ 基础反弹 Shell 模板库</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline__item timeline__item--done">
+        <div class="timeline__marker"><span>✓</span></div>
+        <div class="timeline__content">
+          <div class="timeline__phase">Phase 2 · 2024 Q2–Q3</div>
+          <h3>免杀与伪装模块</h3>
+          <ul>
+            <li>✅ 多态混淆算法 v1</li>
+            <li>✅ HTTPS C2 流量伪装</li>
+            <li>✅ AV 规避测试套件</li>
+            <li>✅ Docker 一键部署</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline__item timeline__item--active">
+        <div class="timeline__marker"><span>🔥</span></div>
+        <div class="timeline__content">
+          <div class="timeline__phase">Phase 3 · 2024 Q4 – 2025 Q1 <span class="badge badge--active">进行中</span></div>
+          <h3>Web 面板 & 插件生态</h3>
+          <ul>
+            <li>🔄 现代化 Web 管理面板</li>
+            <li>🔄 插件 SDK 发布</li>
+            <li>⬜ macOS / Android 载荷支持</li>
+            <li>⬜ 社区插件市场</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__marker"><span>◎</span></div>
+        <div class="timeline__content">
+          <div class="timeline__phase">Phase 4 · 2025 Q2–Q3</div>
+          <h3>AI 辅助 & 企业特性</h3>
+          <ul>
+            <li>⬜ LLM 辅助载荷变形</li>
+            <li>⬜ 团队协作模式</li>
+            <li>⬜ SIEM 集成接口</li>
+            <li>⬜ 报告自动化生成</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__marker"><span>◎</span></div>
+        <div class="timeline__content">
+          <div class="timeline__phase">Phase 5 · 2025 Q4+</div>
+          <h3>云原生 & 生态扩展</h3>
+          <ul>
+            <li>⬜ SaaS 托管版本</li>
+            <li>⬜ 移动端 App</li>
+            <li>⬜ 漏洞情报集成</li>
+            <li>⬜ 国际化多语言</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── CHANGELOG ───────────── -->
+<section class="section changelog" id="changelog">
+  <div class="container">
+    <div class="section__header">
+      <div class="badge">更新日志</div>
+      <h2 class="section__title">每次更新<span class="gradient-text">都很重要</span></h2>
+    </div>
+    <div class="changelog__list">
+      <div class="changelog__item">
+        <div class="changelog__meta">
+          <span class="changelog__version">v2.4.1</span>
+          <span class="changelog__tag changelog__tag--patch">Patch</span>
+          <span class="changelog__date">2025-04-18</span>
+        </div>
+        <div class="changelog__body">
+          <p class="changelog__title">热修复：修复 DNS 隧道在 Windows 11 24H2 的兼容性问题</p>
+          <ul>
+            <li>🐛 修复 DNS over HTTPS 模式下的证书验证错误</li>
+            <li>🐛 修复 Session 心跳包超时计算逻辑</li>
+            <li>⚡ 优化载荷注入内存占用降低 23%</li>
+          </ul>
+        </div>
+      </div>
+      <div class="changelog__item changelog__item--featured">
+        <div class="changelog__meta">
+          <span class="changelog__version">v2.4.0</span>
+          <span class="changelog__tag changelog__tag--minor">Minor</span>
+          <span class="changelog__date">2025-03-30</span>
+        </div>
+        <div class="changelog__body">
+          <p class="changelog__title">新增 Web 管理面板 Alpha & 插件 SDK</p>
+          <ul>
+            <li>✨ 全新 Web UI 面板（Vue 3 + Tailwind CSS）</li>
+            <li>✨ 插件 SDK v0.1 正式发布，支持自定义协议</li>
+            <li>✨ macOS ARM64 原生二进制支持</li>
+            <li>🔒 加固 C2 通信的 mTLS 双向认证</li>
+            <li>📦 Docker 镜像体积从 120MB 压缩至 47MB</li>
+          </ul>
+        </div>
+      </div>
+      <div class="changelog__item">
+        <div class="changelog__meta">
+          <span class="changelog__version">v2.3.2</span>
+          <span class="changelog__tag changelog__tag--patch">Patch</span>
+          <span class="changelog__date">2025-02-14</span>
+        </div>
+        <div class="changelog__body">
+          <p class="changelog__title">安全更新 + 混淆算法优化</p>
+          <ul>
+            <li>🔒 升级依赖，修复 2 个已知安全漏洞</li>
+            <li>⚡ 多态混淆算法 v2，绕过率提升 18%</li>
+            <li>📝 完善中英双语文档</li>
+          </ul>
+        </div>
+      </div>
+      <div class="changelog__item">
+        <div class="changelog__meta">
+          <span class="changelog__version">v2.3.0</span>
+          <span class="changelog__tag changelog__tag--minor">Minor</span>
+          <span class="changelog__date">2025-01-05</span>
+        </div>
+        <div class="changelog__body">
+          <p class="changelog__title">ICMP 隧道 + 报告生成器</p>
+          <ul>
+            <li>✨ ICMP 隐蔽通道支持</li>
+            <li>✨ 自动化 PDF 报告生成模块</li>
+            <li>🌍 新增日语、韩语界面翻译</li>
+          </ul>
+        </div>
+      </div>
+      <div class="changelog__item">
+        <div class="changelog__meta">
+          <span class="changelog__version">v2.0.0</span>
+          <span class="changelog__tag changelog__tag--major">Major</span>
+          <span class="changelog__date">2024-09-01</span>
+        </div>
+        <div class="changelog__body">
+          <p class="changelog__title">🎉 2.0 大版本 — 架构重写</p>
+          <ul>
+            <li>🏗️ 全新插件化架构，性能提升 3×</li>
+            <li>✨ 流量伪装引擎 v2（域前置 + CDN）</li>
+            <li>✨ 多人协作 Session 共享</li>
+            <li>🗑️ 移除已弃用的 v1 API</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="changelog__more">
+      <a href="https://github.com/liangyile527" target="_blank" class="btn btn--outline">查看完整更新历史 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── STATS / GROWTH ───────────── -->
+<section class="section stats" id="stats">
+  <div class="container">
+    <div class="section__header">
+      <div class="badge">增长趋势</div>
+      <h2 class="section__title">社区<span class="gradient-text">持续壮大</span></h2>
+      <p class="section__sub">数据来源于 GitHub，每日自动更新。</p>
+    </div>
+    <div class="stats__cards">
+      <div class="stats__card">
+        <div class="stats__card-icon">⭐</div>
+        <div class="stats__card-num counter" data-target="2400">0</div>
+        <div class="stats__card-label">GitHub Stars</div>
+        <div class="stats__card-delta">+320 本月</div>
+      </div>
+      <div class="stats__card">
+        <div class="stats__card-icon">🍴</div>
+        <div class="stats__card-num counter" data-target="380">0</div>
+        <div class="stats__card-label">Forks</div>
+        <div class="stats__card-delta">+55 本月</div>
+      </div>
+      <div class="stats__card">
+        <div class="stats__card-icon">📥</div>
+        <div class="stats__card-num counter" data-target="18600">0</div>
+        <div class="stats__card-label">总下载量</div>
+        <div class="stats__card-delta">+2.1k 本月</div>
+      </div>
+      <div class="stats__card">
+        <div class="stats__card-icon">🌍</div>
+        <div class="stats__card-num counter" data-target="43">0</div>
+        <div class="stats__card-label">国家/地区</div>
+        <div class="stats__card-delta">覆盖全球</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-tabs">
+        <button class="chart-tab chart-tab--active" data-chart="stars">Stars 增长</button>
+        <button class="chart-tab" data-chart="downloads">下载量</button>
+        <button class="chart-tab" data-chart="contributors">贡献者</button>
+      </div>
+      <canvas id="growthChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── TESTIMONIALS ───────────── -->
+<section class="section testimonials">
+  <div class="container">
+    <div class="section__header">
+      <div class="badge">社区声音</div>
+      <h2 class="section__title">来自<span class="gradient-text">安全社区</span>的评价</h2>
+    </div>
+    <div class="testimonials__grid">
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p>"Payloader-fake 是我用过最顺手的载荷工具，免杀效果在内网实战中表现超出预期。"</p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">RX</div>
+          <div>
+            <div class="testimonial-card__name">RedX Team</div>
+            <div class="testimonial-card__role">某金融机构红队负责人</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p>"插件 SDK 设计非常优雅，我们一周内就完成了自定义 C2 协议插件的开发，文档也很完善。"</p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">SC</div>
+          <div>
+            <div class="testimonial-card__name">SecurityCon Speaker</div>
+            <div class="testimonial-card__role">安全研究员 · 10y exp</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p>"Docker 部署真的是一条命令的事，团队在外网演练时用得非常顺畅，感谢维护团队的持续投入。"</p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">PT</div>
+          <div>
+            <div class="testimonial-card__name">PenTest.pro</div>
+            <div class="testimonial-card__role">渗透测试工程师</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── CTA ───────────── -->
+<section class="section cta">
+  <div class="container">
+    <div class="cta__card">
+      <div class="cta__glow"></div>
+      <div class="cta__content">
+        <h2>开始使用 <span class="gradient-text">Payloader-fake</span></h2>
+        <p>加入 2400+ 安全研究人员，免费、开源、持续更新。</p>
+        <div class="cta__btns">
+          <a href="https://github.com/liangyile527" target="_blank" class="btn btn--primary btn--lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Star on GitHub
+          </a>
+          <a href="https://github.com/liangyile527" target="_blank" class="btn btn--ghost btn--lg">查看文档 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── FOOTER ───────────── -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="nav__logo-icon">⚡</span>
+      <span class="nav__logo-text">Payloader<span class="accent">-fake</span></span>
+      <p>仅限授权安全测试使用。<br />违法使用与本项目无关。</p>
+    </div>
+    <div class="footer__links">
+      <div class="footer__col">
+        <h4>项目</h4>
+        <a href="https://github.com/liangyile527" target="_blank">GitHub</a>
+        <a href="#changelog">更新日志</a>
+        <a href="#roadmap">路线图</a>
+      </div>
+      <div class="footer__col">
+        <h4>资源</h4>
+        <a href="#">使用文档</a>
+        <a href="#">API 参考</a>
+        <a href="#">示例项目</a>
+      </div>
+      <div class="footer__col">
+        <h4>社区</h4>
+        <a href="#">讨论区</a>
+        <a href="#">贡献指南</a>
+        <a href="#">行为准则</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2025 Payloader-fake · MIT License · 仅用于合法授权测试</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
